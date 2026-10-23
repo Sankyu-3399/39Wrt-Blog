@@ -3,6 +3,7 @@ title: '烽火Pro2 ( LG6151M )'
 published: 2026-10-24
 description: '烽火 Pro2（LG6151M）硬件规格与 39Wrt 适配进展，包含蜂窝网络、Wi-Fi 7、短信通话及 LuCI 界面展示。'
 tags: [FWA, 5G, CPE]
+category: '开发进度记录'
 draft: false
 ---
 
