@@ -30,12 +30,12 @@ SP Tools 工具包提供 **CN** 和 **Global** 两个下载入口。下载并解
 
 <div class="not-prose my-4 flex flex-wrap gap-3">
 <a class="no-styling btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="http://pan.39network.cc:5212/f/5NWh1/SPFlashTool.zip" aria-label="下载 SP Tools 工具包（CN）">点我下载 CN</a>
-<a class="no-styling btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="https://drive.google.com/file/d/1BbuYrlgCpxm27XfqNX3WOK9pmJdyHXNa/view?usp=share_link" aria-label="下载 SP Tools 工具包（Global）">点我下载 Global</a>
+<a class="no-styling btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="https://drive.google.com/drive/folders/1IPYCvKENkLqu_yfbMhxIg1LOZXc8X46V?usp=sharing" aria-label="打开 Air6 工具、固件与 OTA 下载文件夹（Global）">点我下载 Global</a>
 </div>
 
-安装完成后，加入下方 QQ 群，从群文件中下载我提供的 **SoftBank Air6（A775）线刷包**，并解压。
+**Global 入口为 Google Drive 共享文件夹，SP Tools 工具包、Firmware（线刷固件）和后续 OTA 更新都会在这里提供。**
 
-<a class="no-styling not-prose btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="https://qm.qq.com/q/I4tYjKK16S">点击链接加入群聊【softbank air6开源玩机】</a>
+安装好工具后，从该文件夹下载 **SoftBank Air6（A775）线刷包**并解压，再按下文先备份原始分区、后刷入固件。
 
 ## 首次刷机前：回读原始分区
 
