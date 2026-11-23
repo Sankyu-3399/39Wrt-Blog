@@ -1,13 +1,14 @@
 ---
 title: 'SoftBank Air6 ( A775 )'
 published: 2026-11-17
-description: 'SoftBank Air6（A775）的硬件规格、39Wrt 技术预览版线刷步骤、首次设置和系统界面展示。'
+updated: 2026-11-24
+description: 'SoftBank Air6（A775）的硬件规格、首次刷机前的原始分区备份、39Wrt 线刷步骤、首次设置和系统界面展示。'
 tags: [FWA, 5G, CPE]
 category: '开发进度记录'
 draft: false
 ---
 
-**SoftBank Air6（A775）是 SoftBank 推出的 5G 家用路由器，支持 Wi-Fi 7。** 这次为 Air6 准备了 39Wrt 技术预览版。下面记录设备的硬件规格、Windows 下的线刷步骤，以及刷机后如何完成首次设置。
+**SoftBank Air6（A775）是 SoftBank 推出的 5G 家用路由器，支持 Wi-Fi 7。** 这次为 Air6 准备了 39Wrt 技术预览版。下面记录设备的硬件规格、Windows 下的原始分区备份与线刷步骤，以及刷机后如何完成首次设置。
 
 ## 硬件规格
 
@@ -23,17 +24,58 @@ draft: false
 ## 刷机前准备
 
 - **电脑**：一台 Windows PC。
-- **数据线**：一条 USB-A 转 USB-A 或 USB-A 转 USB-C 数据线，用于连接 Air6 机身电源接口旁的 USB-A 端口与电脑。**只有充电功能的线不能用于刷机。**
+- **数据线**：一条 USB-A 转 USB-A 或 USB-A 转 USB-C 数据线，用于连接 Air6 机身**电源插孔上方的 USB-A 端口**与电脑。**只有充电功能的线不能用于回读和刷机。**
 
-先下载并解压 SP Tools 工具包，再安装包内的 `VC_redist.x86`、`VC_redist.x64` 和 `Driver` 驱动。
+SP Tools 工具包提供 **CN** 和 **Global** 两个下载入口。下载并解压后，安装包内的 `VC_redist.x86`、`VC_redist.x64` 和 `Driver` 驱动。
 
-<a class="no-styling not-prose btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="http://pan.39network.cc:5212/f/5NWh1/SPFlashTool.zip" aria-label="点我下载 SP Tools 工具包">点我下载</a>
+<div class="not-prose my-4 flex flex-wrap gap-3">
+<a class="no-styling btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="http://pan.39network.cc:5212/f/5NWh1/SPFlashTool.zip" aria-label="下载 SP Tools 工具包（CN）">点我下载 CN</a>
+<a class="no-styling btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="https://drive.google.com/file/d/1BbuYrlgCpxm27XfqNX3WOK9pmJdyHXNa/view?usp=share_link" aria-label="下载 SP Tools 工具包（Global）">点我下载 Global</a>
+</div>
 
 安装完成后，加入下方 QQ 群，从群文件中下载我提供的 **SoftBank Air6（A775）线刷包**，并解压。
 
 <a class="no-styling not-prose btn-regular !inline-flex min-h-11 max-w-full rounded-lg px-4 py-2 font-bold" href="https://qm.qq.com/q/I4tYjKK16S">点击链接加入群聊【softbank air6开源玩机】</a>
 
+## 首次刷机前：回读原始分区
+
+**首次刷入 39Wrt 前，务必先回读并保存本机的原始分区数据。确认备份完成后，再进行固件升级。**
+
+:::caution[先备份本机的校准与身份数据]
+
+需要回读的六个分区是 **`nvcfg`、`nvdata`、`nvram`、`qraw`、`raw1` 和 `raw2`**。这些分区包含这台设备独有的校准与身份数据。
+
+**丢失这些数据会导致设备无线电性能显著下降，甚至无法正常使用。** 请妥善保存原始备份，并另存一份副本。
+
+:::
+
+### 载入配置与读取分区表
+
+1. 保持 Air6 断电，打开 **SPFlashToolV6**。
+2. 点击 **Download-XML** 右侧的 **选择**，打开线刷包内 `download_agent` 文件夹中的 `flash.xml`。
+3. 切换到 **回读** 页，选择 **自动**，再点击 **读取分区表**。
+4. 用数据线将仍处于断电状态的 Air6 **电源插孔上方的 USB-A 端口**连接至 Windows PC，确认接稳后，再给 Air6 接通电源。
+5. 等待工具读取设备分区表，直到窗口中出现分区列表。
+
+![SP Tools 回读设置：切换到「回读」页，选择「自动」，再点击「读取分区表」](./images/03-readback-auto.png)
+
+### 选择分区并回读
+
+**读取分区表只是列出设备上的分区，还需要继续勾选分区并执行回读，才会保存分区数据。**
+
+1. 在分区列表中逐项勾选 **`nvcfg`、`nvdata`、`nvram`、`qraw`、`raw1` 和 `raw2`**。部分分区需要向下滚动才能找到。
+2. 检查所选分区对应的 **文件位置**，确认备份文件将保存在哪里。
+3. 分区表读取完成后，让 Air6 重新处于断电状态。先点击工具栏中的 **回读** 按钮，再将 Air6 **电源插孔上方的 USB-A 端口**连接至 Windows PC，确认连接可靠后给 Air6 通电。
+4. 等待工具完成所选分区的回读。**回读期间不要拔掉数据线，也不要切断 Air6 或电脑的电源。**
+5. 工具提示回读成功后，到「文件位置」对应的目录检查六个分区的备份文件，确认均已保存且文件大小不为零。建议按设备型号、序列号和备份日期整理保存。
+
+下图展示分区列表与文件位置，**请按上方的六个分区名称逐项勾选**。
+
+![SP Tools 自动回读分区列表：按名称勾选需要备份的分区，并核对文件保存位置](./images/04-readback-partitions.png)
+
 ## 线刷步骤
+
+**确认上面的六份原始分区备份已经妥善保存后，再开始写入固件。**
 
 ### 载入线刷包
 
@@ -44,7 +86,7 @@ draft: false
 
 ### 选择固件升级
 
-载入 `flash.xml` 后，在「下载」页的模式下拉框中选择 **固件升级**。位置见下图红框。
+载入 `flash.xml` 后，切换到 **下载** 页，将模式下拉框改为 **固件升级**。位置见下图红框。
 
 :::caution[务必保留原厂校准数据]
 
@@ -61,9 +103,9 @@ draft: false
 **写入期间不要拔掉数据线，也不要切断 Air6 或电脑的电源。**
 
 1. 保持 Air6 断电，先点击 SPFlashToolV6 中的 **下载** 按钮。
-2. 用数据线将 Air6 的 USB-A 端口连接到 Windows 电脑。
+2. 用数据线将 Air6 **电源插孔上方的 USB-A 端口**连接至 Windows PC。
 3. 确认已点击 **下载**，且数据线两端都接稳后，再给 Air6 接通电源。工具会自动识别设备，写入 **39Wrt 系统和新版基带固件**。
-4. 等待工具提示写入完成，再让设备自动重启并开机。
+4. 升级完成后，等待设备自动重启并完成首次启动，最多需要 **300 秒（约 5 分钟）**。这期间请保持供电，不要反复断电重启。
 
 ## 首次开机
 
